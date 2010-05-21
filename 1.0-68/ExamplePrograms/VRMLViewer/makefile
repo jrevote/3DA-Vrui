@@ -22,7 +22,7 @@
 ########################################################################
 
 # Set the Vrui installation directory:
-VRUIDIR = $(HOME)/Vrui-1.0
+VRUIDIR = /home/jrevote/Documents/Projects/3D-Alive/Development/Builds/Vrui-1.0-068
 
 # Set up additional flags for the C++ compiler:
 CFLAGS = 

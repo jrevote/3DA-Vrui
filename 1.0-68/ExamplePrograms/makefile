@@ -22,7 +22,7 @@
 # same setting in Vrui's makefile. By default the directories match; if
 # the installation directory was adjusted during Vrui's installation, it
 # must be adjusted here as well.
-VRUIDIR = $(HOME)/Vrui-1.0
+VRUIDIR = /home/jrevote/Documents/Projects/3D-Alive/Development/Builds/Vrui-1.0-068
 
 # Base installation directory for the example programs. If this is set
 # to the default of $(PWD), the example programs do not have to be
@@ -31,14 +31,14 @@ VRUIDIR = $(HOME)/Vrui-1.0
 # directory, respectively.
 # Important note: Do not use ~ as an abbreviation for the user's home
 # directory here; use $(HOME) instead.
-INSTALLDIR = $(shell pwd)
+INSTALLDIR = /home/jrevote/Documents/Projects/3D-Alive/Development/Builds/Vrui-1.0-068/demos
 
 # Set up destination directories for compilation products:
 OBJDIRBASE = o
 BINDIRBASE = bin
 
 # Set resource directory:
-RESOURCEDIR = share/VruiExamplePrograms
+RESOURCEDIR = share
 
 # Set up additional flags for the C++ compiler:
 CFLAGS = 
@@ -78,6 +78,7 @@ ALL = $(BINDIR)/VruiDemo \
       $(BINDIR)/VruiCustomToolDemo \
       $(BINDIR)/VruiCalibrator \
       $(BINDIR)/ShowEarthModel \
+      $(BINDIR)/ShowCloudModel \
       $(BINDIR)/Jello \
       $(BINDIR)/ClusterJello \
       $(BINDIR)/SharedJelloServer \
@@ -114,6 +115,15 @@ $(BINDIR)/ShowEarthModel: $(OBJDIR)/EarthFunctions.o \
                           $(OBJDIR)/EarthquakeSet.o \
                           $(OBJDIR)/EarthquakeTool.o \
                           $(OBJDIR)/ShowEarthModel.o
+
+$(OBJDIR)/ShowCloudModel.o: CFLAGS += -DSHOWEARTHMODEL_IMAGEDIR='"$(INSTALLDIR)/$(RESOURCEDIR)"'
+
+$(BINDIR)/ShowCloudModel: $(OBJDIR)/EarthFunctions.o \
+                          $(OBJDIR)/PointSet.o \
+                          $(OBJDIR)/SeismicPath.o \
+                          $(OBJDIR)/EarthquakeSet.o \
+                          $(OBJDIR)/EarthquakeTool.o \
+                          $(OBJDIR)/ShowCloudModel.o
 
 $(BINDIR)/Jello: $(OBJDIR)/JelloAtom.o \
                  $(OBJDIR)/JelloCrystal.o \
