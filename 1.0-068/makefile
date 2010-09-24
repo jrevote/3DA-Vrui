@@ -451,6 +451,16 @@ ifneq ($(IMAGES_USE_TIFF),0)
 else
 	@echo "TIFF image file format disabled"
 endif
+ifneq ($(FORMATS_USE_HDF5),0)
+	@echo "HDF5 file format enabled"
+else
+	@echo "HDF5 file format disabled"
+endif
+ifneq ($(FORMATS_USE_XDMF),0)
+	@echo "XDMF data file format enabled"
+else
+	@echo "XDMF data file format disabled"
+endif
 ifneq ($(VRUI_USE_PNG),0)
 	@echo "Screenshots will be saved in PNG format"
 else

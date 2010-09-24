@@ -157,7 +157,7 @@ $(LIBDESTDIR)/$(call FULLDSONAME,%):
 ifdef SHOWCOMMAND
 	$(CCOMP) $(call DSOLINKFLAGS,$(*F)) -o $@ $^ $(LINKDIRFLAGS) $(LINKLIBFLAGS)
 else
-	@echo Linking $(CPACKAGEFLAGS) $@...
+	@echo Linking $@...
 	@$(CCOMP) $(call DSOLINKFLAGS,$(*F)) -o $@ $^ $(LINKDIRFLAGS) $(LINKLIBFLAGS)
 endif
 	@-rm -f $(LIBDESTDIR)/$(call DSONAME,$*) $(LIBDESTDIR)/$(call LINKDSONAME,$*)

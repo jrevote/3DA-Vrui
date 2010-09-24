@@ -97,18 +97,28 @@ TIFF_LIBDIR = -L$(TIFF_BASEDIR)/$(LIBEXT)
 TIFF_LIBS = -ltiff
 
 # The HDF5 library package
-HDF5_BASEDIR = $(shell $(VRUIPACKAGEROOT)/BuildRoot/FindLibrary.sh hdf5.h libhdf5.$(DSOFILEEXT) $(INCLUDEEXT) $(LIBEXT) /usr /usr/local /usr/local/packages/hdf5-1.8.5-gcc-4.4.1)
+#HDF5_BASEDIR = $(shell $(VRUIPACKAGEROOT)/BuildRoot/FindLibrary.sh hdf5.h libhdf5.$(DSOFILEEXT) $(INCLUDEEXT) $(LIBEXT) /usr /usr/local /usr/local/packages/hdf5-1.8.5-gcc-4.4.1)
+HDF5_BASEDIR = /usr/local/packages/hdf5-1.8.5-gcc-4.4.1
 HDF5_DEPENDS = 
-HDF5_INCLUDE = -I$(HDF5_BASEDIR)/$(INCLUDEEXT)
-HDF5_LIBDIR = -L$(HDF5_BASEDIR)/$(LIBEXT)
+HDF5_INCLUDE = -I$(HDF5_BASEDIR)/include
+HDF5_LIBDIR = -L$(HDF5_BASEDIR)/lib
 HDF5_LIBS = -lhdf5
 
 # The XDMF library package
-XDMF_BASEDIR = $(shell $(VRUIPACKAGEROOT)/BuildRoot/FindLibrary.sh Xdmf.h libXdmf.$(DSOFILEEXT) $(INCLUDEEXT) $(LIBEXT) /usr /usr/local /usr/local/packages/xdmf-gcc-4.4.1)
-XDMF_DEPENDS =
-XDMF_INCLUDE = -I$(XDMF_BASEDIR)/$(INCLUDEEXT)
-XDMF_LIBDIR = -L$(XDMF_BASEDIR)/$(LIBEXT)
+#XDMF_BASEDIR = $(shell $(VRUIPACKAGEROOT)/BuildRoot/FindLibrary.sh Xdmf.h libXdmf.$(DSOFILEEXT) $(INCLUDEEXT) $(LIBEXT) /usr /usr/local /usr/local/packages/xdmf-gcc-4.4.1)
+XDMF_BASEDIR = /usr/local/packages/xdmf-gcc-4.4.1
+XDMF_DEPENDS = 
+XDMF_INCLUDE = -I$(XDMF_BASEDIR)/include
+XDMF_LIBDIR = -L$(XDMF_BASEDIR)/lib
 XDMF_LIBS = -lXdmf
+
+# The CFITSIO library package
+#CFITSIO_BASEDIR = $(shell $(VRUIPACKAGEROOT)/BuildRoot/FindLibrary.sh fitsio.h libcfitsio.$(DSOFILEEXT) $(INCLUDEEXT) $(LIBEXT) /usr /usr/local /usr/local/packages/xdmf-gcc-4.4.1)
+CFITSIO_BASEDIR = /usr/local/packages/cfitsio-3.25-gcc-4.4.1/
+CFITSIO_DEPENDS = 
+CFITSIO_INCLUDE = -I$(CFITSIO_BASEDIR)/include
+CFITSIO_LIBDIR = -L$(CFITSIO_BASEDIR)/lib
+CFITSIO_LIBS = -lcfitsio
 
 # The ALSA low-level sound library
 ALSA_BASEDIR = $(shell $(VRUIPACKAGEROOT)/BuildRoot/FindLibrary.sh alsa/asoundlib.h libasound.$(DSOFILEEXT) $(INCLUDEEXT) $(LIBEXT) /usr /usr/local)
