@@ -35,12 +35,19 @@ class XDMFFileReader
    /* Elements */
    private:
    DataSource& dataSource;
+   XdmfDOM* dom;
+   XdmfGrid* grid;
+   XdmfHDF* heavyData;
+   XdmfTime* time;
 
    /* Constructors and destructors: */
    public:
    XDMFFileReader(DataSource& sDataSource); // Creates an XDMF file reader for the given data source
    ~XDMFFileReader(void);
-   
+
+   /* File reading functions, can be called only once for each file reader: */
+   template <class FileParam>
+   FileParam readFile(void); // Reads the content of the XDMF file into a file of template class File
    };
 
 }
