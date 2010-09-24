@@ -76,16 +76,14 @@ ZLIB_LIBDIR =
 ZLIB_LIBS = -lz
 
 # The PNG image package
-#PNG_BASEDIR = $(shell $(VRUIPACKAGEROOT)/BuildRoot/FindLibrary.sh png.h libpng.$(DSOFILEEXT) $(INCLUDEEXT) $(LIBEXT) /usr /usr/local)
-PNG_BASEDIR = /usr/local/packages/libpng-1.2.40-gcc-4.4.1
+PNG_BASEDIR = $(shell $(VRUIPACKAGEROOT)/BuildRoot/FindLibrary.sh png.h libpng.$(DSOFILEEXT) $(INCLUDEEXT) $(LIBEXT) /usr /usr/local)
 PNG_DEPENDS = 
 PNG_INCLUDE = -I$(PNG_BASEDIR)/$(INCLUDEEXT)
 PNG_LIBDIR = -L$(PNG_BASEDIR)/$(LIBEXT)
 PNG_LIBS = -lpng
 
 # The JPEG encoding/decoding package
-#JPEG_BASEDIR = $(shell $(VRUIPACKAGEROOT)/BuildRoot/FindLibrary.sh jpeglib.h libjpeg.$(DSOFILEEXT) $(INCLUDEEXT) $(LIBEXT) /usr /usr/local)
-JPEG_BASEDIR = /usr/local/packages/libjpeg-8-gcc-4.4.1
+JPEG_BASEDIR = $(shell $(VRUIPACKAGEROOT)/BuildRoot/FindLibrary.sh jpeglib.h libjpeg.$(DSOFILEEXT) $(INCLUDEEXT) $(LIBEXT) /usr /usr/local)
 JPEG_DEPENDS = 
 JPEG_INCLUDE = -I$(JPEG_BASEDIR)/$(INCLUDEEXT)
 JPEG_LIBDIR = -L$(JPEG_BASEDIR)/$(LIBEXT)
@@ -99,17 +97,15 @@ TIFF_LIBDIR = -L$(TIFF_BASEDIR)/$(LIBEXT)
 TIFF_LIBS = -ltiff
 
 # The HDF5 library package
-#HDF5_BASEDIR = $(shell $(VRUIPACKAGEROOT)/BuildRoot/FindLibrary.sh hdf5.h libhdf5.$(DSOFILEEXT) $(INCLUDEEXT) $(LIBEXT) /usr /usr/local)
-HDF5_BASEDIR = /usr/local/packages/hdf5-1.8.5-gcc-4.4.1
+HDF5_BASEDIR = $(shell $(VRUIPACKAGEROOT)/BuildRoot/FindLibrary.sh hdf5.h libhdf5.$(DSOFILEEXT) $(INCLUDEEXT) $(LIBEXT) /usr /usr/local /usr/local/packages/hdf5-1.8.5-gcc-4.4.1)
 HDF5_DEPENDS = 
 HDF5_INCLUDE = -I$(HDF5_BASEDIR)/$(INCLUDEEXT)
 HDF5_LIBDIR = -L$(HDF5_BASEDIR)/$(LIBEXT)
 HDF5_LIBS = -lhdf5
 
 # The XDMF library package
-#XDMF_BASEDIR = $(shell $(VRUIPACKAGEROOT)/BuildRoot/FindLibrary.sh Xdmf.h libXdmf.$(DSOFILEEXT) $(INCLUDEEXT) $(LIBEXT) /usr /usr/local)
-XDMF_BASEDIR = /usr/local/packages/xdmf-gcc-4.4.1
-XDMF_DEPENDS = HDF5
+XDMF_BASEDIR = $(shell $(VRUIPACKAGEROOT)/BuildRoot/FindLibrary.sh Xdmf.h libXdmf.$(DSOFILEEXT) $(INCLUDEEXT) $(LIBEXT) /usr /usr/local /usr/local/packages/xdmf-gcc-4.4.1)
+XDMF_DEPENDS =
 XDMF_INCLUDE = -I$(XDMF_BASEDIR)/$(INCLUDEEXT)
 XDMF_LIBDIR = -L$(XDMF_BASEDIR)/$(LIBEXT)
 XDMF_LIBS = -lXdmf

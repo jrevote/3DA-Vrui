@@ -106,7 +106,7 @@ $(OBJDIR)/%.o: %.c
 ifdef SHOWCOMMAND
 	$(PLAINCCOMP) -MD -c -o $@ $(CCFLAGS) $<
 else
-	@echo Compiling $< with $@ $(CCFLAGS)
+	@echo Compiling $<
 	@$(PLAINCCOMP) -MD -c -o $@ $(CCFLAGS) $<
 endif
 	@$(PROCESS_DEPFILE)
@@ -119,7 +119,7 @@ $(OBJDIR)/%.o: %.cpp
 ifdef SHOWCOMMAND
 	$(CCOMP) -MD -c -o $@ $(CCFLAGS) $<
 else
-	@echo Compiling $< with $@ $(CCFLAGS)
+	@echo Compiling $<
 	@$(CCOMP) -MD -c -o $@ $(CCFLAGS) $<
 endif
 	@$(PROCESS_DEPFILE)
@@ -131,7 +131,7 @@ $(OBJDIR)/%.o: %.cc
 ifdef SHOWCOMMAND
 	$(CCOMP) -MD -c -o $@ $(CCFLAGS) $<
 else
-	@echo Compiling $< with $@ $(CCLAGS)
+	@echo Compiling $<
 	@$(CCOMP) -MD -c -o $@ $(CCFLAGS) $<
 endif
 	@$(PROCESS_DEPFILE)
