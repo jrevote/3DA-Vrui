@@ -79,12 +79,12 @@ else
 endif
 
 # Set the following flags to 1 if the formats handling library shall
-# contain support for reading/writing HDF5, XDMF formats, respectively.
-# This requires that libhdf5, libxdmf are installed on the host computer
-# and that the paths to their respective header files / libraries are set
-# properly in $(VRUIPACKAGEROOT)/BuildRoot/Packages. For now, the
-# following code tries to determine automatically whether HDF5 and/or XDMF
-# are supported. This might or might now work.
+# contain support for reading/writing HDF5, XDMF, FITS formats, respectively.
+# This requires that libhdf5, libxdmf, libcfitsio, libccfits are installed 
+# on the host computer and that the paths to their respective header
+# files / libraries are set properly in $(VRUIPACKAGEROOT)/BuildRoot/Packages.
+# For now, the following code tries to determine automatically 
+# whether HDF5, XDMF and FITS are supported. This might or might now work.
 ifneq ($(strip $(HDF5_BASEDIR)),)
   FORMATS_USE_HDF5 = 1
 else
@@ -94,6 +94,11 @@ ifneq ($(strip $(XDMF_BASEDIR)),)
   FORMATS_USE_XDMF = 1
 else
   FORMATS_USE_XDMF = 0
+endif
+ifneq ($(strip $(CCFITS_BASEDIR)),)
+  FORMATS_USE_CCFITS = 1
+else
+  FORMATS_USE_CCFITS = 0
 endif
 
 # Set this to 1 if Vrui shall contain support for saving screenshots in
@@ -347,7 +352,7 @@ EXECUTABLES += $(EXEDIR)/DeviceTest
 # The input device data file dumping program:
 #
 
-EXECUTABLES += $(EXEDIR)/PrintInputDeviceDataFile
+FITS += $(EXEDIR)/PrintInputDeviceDataFile
 
 #
 # The VR device driver daemon:
@@ -460,6 +465,11 @@ ifneq ($(FORMATS_USE_XDMF),0)
 	@echo "XDMF data file format enabled"
 else
 	@echo "XDMF data file format disabled"
+endif
+ifneq ($(FORMATS_USE_CCFITS),0)
+	@echo "FITS data file format enabled"
+else
+	@echo "FITS data file format disabled"
 endif
 ifneq ($(VRUI_USE_PNG),0)
 	@echo "Screenshots will be saved in PNG format"
@@ -1112,11 +1122,13 @@ libImages: $(call LIBRARYNAME,libImages)
 # The Format Handling Library (Formats)
 #
 
-FORMATS_HEADERS = Formats/Format.h 
-                  #Formats/ReadXdmfFile.h Formats/ReadXdmfFile.cpp 
+FORMATS_HEADERS = Formats/Format.h \
+                  Formats/ReadXDMFFile.h Formats/ReadXDMFFile.cpp \
+                  Formats/ReadFITSFile.h Formats/ReadFITSFile.cpp 
 
-FORMATS_SOURCES = Formats/Format.cpp 
-                  #Formats/ReadXdmfFile.cpp
+FORMATS_SOURCES = Formats/Format.cpp \
+                  Formats/ReadXDMFFile.cpp \
+                  Formats/ReadFITSFile.cpp \
 
 $(call LIBRARYNAME,libFormats): PACKAGES += $(MYFORMATS_DEPENDS)
 $(call LIBRARYNAME,libFormats): EXTRACINCLUDEFLAGS += $(MYFORMATS_INCLUDE)
@@ -1125,6 +1137,9 @@ ifneq ($(FORMATS_USE_HDF5),0)
 endif
 ifneq ($(FORMATS_USE_XDMF),0)
   $(call LIBRARYNAME,libFormats): CFLAGS += -DFORMATS_USE_XDMF
+endif  
+ifneq ($(FORMATS_USE_CCFITS),0)
+  $(call LIBRARYNAME,libFormats): CFLAGS += -DFORMATS_USE_CCFITS
 endif  
 $(call LIBRARYNAME,libFormats): $(call DEPENDENCIES,MYFORMATS)
 $(call LIBRARYNAME,libFormats): $(FORMATS_SOURCES:%.cpp=$(OBJDIR)/%.o)
@@ -1634,6 +1649,9 @@ ifneq ($(FORMATS_USE_HDF5),0)
 endif
 ifneq ($(FORMATS_USE_XDMF),0)
   VRUIAPP_CFLAGS += -DFORMATS_HAVE_XDMF
+endif
+ifneq ($(FORMATS_USE_CCFITS),0)
+  VRUIAPP_CFLAGS += -DFORMATS_HAVE_CCFITS
 endif
 VRUIAPP_LDIRS = -L$(LIBINSTALLDIR)
 VRUIAPP_LDIRS += $(sort $(foreach PACKAGENAME,$(SYSTEMPACKAGES),$($(PACKAGENAME)_LIBDIR)))
