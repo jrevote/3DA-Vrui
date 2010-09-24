@@ -78,6 +78,24 @@ else
   IMAGES_USE_TIFF = 0
 endif
 
+# Set the following flags to 1 if the formats handling library shall
+# contain support for reading/writing HDF5, XDMF formats, respectively.
+# This requires that libhdf5, libxdmf are installed on the host computer
+# and that the paths to their respective header files / libraries are set
+# properly in $(VRUIPACKAGEROOT)/BuildRoot/Packages. For now, the
+# following code tries to determine automatically whether HDF5 and/or XDMF
+# are supported. This might or might now work.
+ifneq ($(strip $(HDF5_BASEDIR)),)
+  FORMATS_USE_HDF5 = 1
+else
+  FORMATS_USE_HDF5 = 0
+endif
+ifneq ($(strip $(XDMF_BASEDIR)),)
+  FORMATS_USE_XDMF = 1
+else
+  FORMATS_USE_XDMF = 0
+endif
+
 # Set this to 1 if Vrui shall contain support for saving screenshots in
 # PNG (Portable Network Graphics) format. If this is set to 0, Vrui will
 # save screenshots in binary (raw) PPM format instead. PNG support
@@ -236,6 +254,7 @@ LIBRARY_NAMES = libMisc \
                 libGLGeometry \
                 libGLMotif \
                 libImages \
+                libFormats \
                 libSound \
                 libALSupport \
                 libSceneGraph \
@@ -1046,6 +1065,7 @@ libGLMotif: $(call LIBRARYNAME,libGLMotif)
 #
 
 IMAGES_HEADERS = Images/Image.h \
+                 Images/Format.h \
                  Images/RGBImage.h \
                  Images/RGBAImage.h \
                  Images/PNMImageFileReader.h Images/PNMImageFileReader.cpp \
@@ -1056,6 +1076,7 @@ IMAGES_HEADERS = Images/Image.h \
                  Images/WriteImageFile.h
 
 IMAGES_SOURCES = Images/Image.cpp \
+                 Images/Format.cpp \
                  Images/PNMImageFileReader.cpp \
                  Images/TargaImageFileReader.cpp \
                  Images/IFFImageFileReader.cpp \
@@ -1078,6 +1099,29 @@ $(call LIBRARYNAME,libImages): $(call DEPENDENCIES,MYIMAGES)
 $(call LIBRARYNAME,libImages): $(IMAGES_SOURCES:%.cpp=$(OBJDIR)/%.o)
 .PHONY: libImages
 libImages: $(call LIBRARYNAME,libImages)
+
+#
+# The Format Handling Library (Formats)
+#
+
+FORMATS_HEADERS = Formats/Format.h 
+                  #Formats/ReadXdmfFile.h Formats/ReadXdmfFile.cpp 
+
+FORMATS_SOURCES = Formats/Format.cpp 
+                  #Formats/ReadXdmfFile.cpp
+
+$(call LIBRARYNAME,libFormats): PACKAGES += $(MYFORMATS_DEPENDS)
+$(call LIBRARYNAME,libFormats): EXTRACINCLUDEFLAGS += $(MYFORMATS_INCLUDE)
+ifneq ($(FORMATS_USE_HDF5),0)
+  $(call LIBRARYNAME,libFormats): CFLAGS += -DFORMATS_USE_HDF5
+endif
+ifneq ($(FORMATS_USE_XDMF),0)
+  $(call LIBRARYNAME,libFormats): CFLAGS += -DFORMATS_USE_XDMF
+endif  
+$(call LIBRARYNAME,libFormats): $(call DEPENDENCIES,MYFORMATS)
+$(call LIBRARYNAME,libFormats): $(FORMATS_SOURCES:%.cpp=$(OBJDIR)/%.0)
+.PHONY: libFormats
+libFormats: $(call LIBRARYNAME,libFormats)
 
 #
 # The basic sound library (Sound)
@@ -1577,6 +1621,12 @@ endif
 ifneq ($(IMAGES_USE_TIFF),0)
   VRUIAPP_CFLAGS += -DIMAGES_HAVE_TIFF
 endif
+ifneq ($(FORMATS_USE_HDF5),0)
+  VRUIAPP_CFLAGS += -DFORMATS_HAVE_HDF5
+endif
+ifneq ($(FORMATS_USE_XDMF),0)
+  VRUIAPP_CFLAGS += -DFORMATS_HAVE_XDMF
+endif
 VRUIAPP_LDIRS = -L$(LIBINSTALLDIR)
 VRUIAPP_LDIRS += $(sort $(foreach PACKAGENAME,$(SYSTEMPACKAGES),$($(PACKAGENAME)_LIBDIR)))
 VRUIAPP_LIBS = $(patsubst lib%,-l%.$(LDEXT),$(LIBRARY_NAMES))
@@ -1648,6 +1698,7 @@ endif
 	@install -m u=rw,go=r $(GLMOTIF_HEADERS) $(HEADERINSTALLDIR)/GLMotif
 	@install -d $(HEADERINSTALLDIR)/Images
 	@install -m u=rw,go=r $(IMAGES_HEADERS) $(HEADERINSTALLDIR)/Images
+	@install -m u=rw,go=r $(FORMATS_HEADERS) $(HEADERINSTALLDIR)/Formats
 ifneq ($(VRUI_USE_OPENAL),0)
 	@install -d $(HEADERINSTALLDIR)/AL
 	@install -m u=rw,go=r $(ALSUPPORT_HEADERS) $(HEADERINSTALLDIR)/AL
