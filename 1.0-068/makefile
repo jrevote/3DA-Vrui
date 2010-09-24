@@ -86,19 +86,19 @@ endif
 # For now, the following code tries to determine automatically 
 # whether HDF5, XDMF and FITS are supported. This might or might now work.
 ifneq ($(strip $(HDF5_BASEDIR)),)
-  FORMATS_USE_HDF5 = 1
+  FILES_USE_HDF5 = 1
 else
-  FORMATS_USE_HDF5 = 0
+  FILES_USE_HDF5 = 0
 endif
 ifneq ($(strip $(XDMF_BASEDIR)),)
-  FORMATS_USE_XDMF = 1
+  FILES_USE_XDMF = 1
 else
-  FORMATS_USE_XDMF = 0
+  FILES_USE_XDMF = 0
 endif
 ifneq ($(strip $(CCFITS_BASEDIR)),)
-  FORMATS_USE_CCFITS = 1
+  FILES_USE_CCFITS = 1
 else
-  FORMATS_USE_CCFITS = 0
+  FILES_USE_CCFITS = 0
 endif
 
 # Set this to 1 if Vrui shall contain support for saving screenshots in
@@ -259,7 +259,7 @@ LIBRARY_NAMES = libMisc \
                 libGLGeometry \
                 libGLMotif \
                 libImages \
-                libFormats \
+                libFiles \
                 libSound \
                 libALSupport \
                 libSceneGraph \
@@ -456,17 +456,17 @@ ifneq ($(IMAGES_USE_TIFF),0)
 else
 	@echo "TIFF image file format disabled"
 endif
-ifneq ($(FORMATS_USE_HDF5),0)
+ifneq ($(FILES_USE_HDF5),0)
 	@echo "HDF5 file format enabled"
 else
 	@echo "HDF5 file format disabled"
 endif
-ifneq ($(FORMATS_USE_XDMF),0)
+ifneq ($(FILES_USE_XDMF),0)
 	@echo "XDMF data file format enabled"
 else
 	@echo "XDMF data file format disabled"
 endif
-ifneq ($(FORMATS_USE_CCFITS),0)
+ifneq ($(FILES_USE_CCFITS),0)
 	@echo "FITS data file format enabled"
 else
 	@echo "FITS data file format disabled"
@@ -1119,32 +1119,32 @@ $(call LIBRARYNAME,libImages): $(IMAGES_SOURCES:%.cpp=$(OBJDIR)/%.o)
 libImages: $(call LIBRARYNAME,libImages)
 
 #
-# The Format Handling Library (Formats)
+# The Format Handling Library (Files)
 #
 
-FORMATS_HEADERS = Formats/Format.h \
-                  Formats/ReadXDMFFile.h Formats/ReadXDMFFile.cpp \
-                  Formats/ReadFITSFile.h Formats/ReadFITSFile.cpp 
+FILES_HEADERS = Files/File.h \
+                  Files/XDMFFileReader.h Files/XDMFFileReader.cpp \
+                  Files/FITSFileReader.h Files/FITSFileReader.cpp 
 
-FORMATS_SOURCES = Formats/Format.cpp \
-                  Formats/ReadXDMFFile.cpp \
-                  Formats/ReadFITSFile.cpp \
+FILES_SOURCES = Files/File.cpp \
+                  Files/XDMFFileReader.cpp \
+                  Files/FITSFileReader.cpp \
 
-$(call LIBRARYNAME,libFormats): PACKAGES += $(MYFORMATS_DEPENDS)
-$(call LIBRARYNAME,libFormats): EXTRACINCLUDEFLAGS += $(MYFORMATS_INCLUDE)
-ifneq ($(FORMATS_USE_HDF5),0)
-  $(call LIBRARYNAME,libFormats): CFLAGS += -DFORMATS_USE_HDF5
+$(call LIBRARYNAME,libFiles): PACKAGES += $(MYFILES_DEPENDS)
+$(call LIBRARYNAME,libFiles): EXTRACINCLUDEFLAGS += $(MYFILES_INCLUDE)
+ifneq ($(FILES_USE_HDF5),0)
+  $(call LIBRARYNAME,libFiles): CFLAGS += -DFILES_USE_HDF5
 endif
-ifneq ($(FORMATS_USE_XDMF),0)
-  $(call LIBRARYNAME,libFormats): CFLAGS += -DFORMATS_USE_XDMF
+ifneq ($(FILES_USE_XDMF),0)
+  $(call LIBRARYNAME,libFiles): CFLAGS += -DFILES_USE_XDMF
 endif  
-ifneq ($(FORMATS_USE_CCFITS),0)
-  $(call LIBRARYNAME,libFormats): CFLAGS += -DFORMATS_USE_CCFITS
+ifneq ($(FILES_USE_CCFITS),0)
+  $(call LIBRARYNAME,libFiles): CFLAGS += -DFILES_USE_CCFITS
 endif  
-$(call LIBRARYNAME,libFormats): $(call DEPENDENCIES,MYFORMATS)
-$(call LIBRARYNAME,libFormats): $(FORMATS_SOURCES:%.cpp=$(OBJDIR)/%.o)
-.PHONY: libFormats
-libFormats: $(call LIBRARYNAME,libFormats)
+$(call LIBRARYNAME,libFiles): $(call DEPENDENCIES,MYFILES)
+$(call LIBRARYNAME,libFiles): $(FILES_SOURCES:%.cpp=$(OBJDIR)/%.o)
+.PHONY: libFiles
+libFiles: $(call LIBRARYNAME,libFiles)
 
 #
 # The basic sound library (Sound)
@@ -1644,14 +1644,14 @@ endif
 ifneq ($(IMAGES_USE_TIFF),0)
   VRUIAPP_CFLAGS += -DIMAGES_HAVE_TIFF
 endif
-ifneq ($(FORMATS_USE_HDF5),0)
-  VRUIAPP_CFLAGS += -DFORMATS_HAVE_HDF5
+ifneq ($(FILES_USE_HDF5),0)
+  VRUIAPP_CFLAGS += -DFILES_HAVE_HDF5
 endif
-ifneq ($(FORMATS_USE_XDMF),0)
-  VRUIAPP_CFLAGS += -DFORMATS_HAVE_XDMF
+ifneq ($(FILES_USE_XDMF),0)
+  VRUIAPP_CFLAGS += -DFILES_HAVE_XDMF
 endif
-ifneq ($(FORMATS_USE_CCFITS),0)
-  VRUIAPP_CFLAGS += -DFORMATS_HAVE_CCFITS
+ifneq ($(FILES_USE_CCFITS),0)
+  VRUIAPP_CFLAGS += -DFILES_HAVE_CCFITS
 endif
 VRUIAPP_LDIRS = -L$(LIBINSTALLDIR)
 VRUIAPP_LDIRS += $(sort $(foreach PACKAGENAME,$(SYSTEMPACKAGES),$($(PACKAGENAME)_LIBDIR)))
@@ -1724,8 +1724,8 @@ endif
 	@install -m u=rw,go=r $(GLMOTIF_HEADERS) $(HEADERINSTALLDIR)/GLMotif
 	@install -d $(HEADERINSTALLDIR)/Images
 	@install -m u=rw,go=r $(IMAGES_HEADERS) $(HEADERINSTALLDIR)/Images
-	@install -d $(HEADERINSTALLDIR)/Formats
-	@install -m u=rw,go=r $(FORMATS_HEADERS) $(HEADERINSTALLDIR)/Formats
+	@install -d $(HEADERINSTALLDIR)/Files
+	@install -m u=rw,go=r $(FILES_HEADERS) $(HEADERINSTALLDIR)/Files
 ifneq ($(VRUI_USE_OPENAL),0)
 	@install -d $(HEADERINSTALLDIR)/AL
 	@install -m u=rw,go=r $(ALSUPPORT_HEADERS) $(HEADERINSTALLDIR)/AL
