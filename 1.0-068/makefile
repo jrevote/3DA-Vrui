@@ -219,7 +219,7 @@ ifdef STATIC_LINK
   OBJDIREXT = Static
 else
   CFLAGS += $(CDSOFLAGS)
-  LIBRARYNAME=$(LIBDESTDIR)/$(call FULLDSONAME,$(1))
+  LIBRARYNAME = $(LIBDESTDIR)/$(call FULLDSONAME,$(1))
 endif
 
 ########################################################################
@@ -1065,7 +1065,6 @@ libGLMotif: $(call LIBRARYNAME,libGLMotif)
 #
 
 IMAGES_HEADERS = Images/Image.h \
-                 Images/Format.h \
                  Images/RGBImage.h \
                  Images/RGBAImage.h \
                  Images/PNMImageFileReader.h Images/PNMImageFileReader.cpp \
@@ -1076,7 +1075,6 @@ IMAGES_HEADERS = Images/Image.h \
                  Images/WriteImageFile.h
 
 IMAGES_SOURCES = Images/Image.cpp \
-                 Images/Format.cpp \
                  Images/PNMImageFileReader.cpp \
                  Images/TargaImageFileReader.cpp \
                  Images/IFFImageFileReader.cpp \
@@ -1119,7 +1117,7 @@ ifneq ($(FORMATS_USE_XDMF),0)
   $(call LIBRARYNAME,libFormats): CFLAGS += -DFORMATS_USE_XDMF
 endif  
 $(call LIBRARYNAME,libFormats): $(call DEPENDENCIES,MYFORMATS)
-$(call LIBRARYNAME,libFormats): $(FORMATS_SOURCES:%.cpp=$(OBJDIR)/%.0)
+$(call LIBRARYNAME,libFormats): $(FORMATS_SOURCES:%.cpp=$(OBJDIR)/%.o)
 .PHONY: libFormats
 libFormats: $(call LIBRARYNAME,libFormats)
 
@@ -1698,6 +1696,7 @@ endif
 	@install -m u=rw,go=r $(GLMOTIF_HEADERS) $(HEADERINSTALLDIR)/GLMotif
 	@install -d $(HEADERINSTALLDIR)/Images
 	@install -m u=rw,go=r $(IMAGES_HEADERS) $(HEADERINSTALLDIR)/Images
+	@install -d $(HEADERINSTALLDIR)/Formats
 	@install -m u=rw,go=r $(FORMATS_HEADERS) $(HEADERINSTALLDIR)/Formats
 ifneq ($(VRUI_USE_OPENAL),0)
 	@install -d $(HEADERINSTALLDIR)/AL
