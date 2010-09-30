@@ -457,9 +457,9 @@ else
 	@echo "TIFF image file format disabled"
 endif
 ifneq ($(FILES_USE_HDF5),0)
-	@echo "HDF5 file format enabled"
+	@echo "HDF5 data file format enabled"
 else
-	@echo "HDF5 file format disabled"
+	@echo "HDF5 data file format disabled"
 endif
 ifneq ($(FILES_USE_XDMF),0)
 	@echo "XDMF data file format enabled"
@@ -1119,34 +1119,6 @@ $(call LIBRARYNAME,libImages): $(IMAGES_SOURCES:%.cpp=$(OBJDIR)/%.o)
 libImages: $(call LIBRARYNAME,libImages)
 
 #
-# The Format Handling Library (Files)
-#
-
-FILES_HEADERS = Files/File.h \
-                  Files/XDMFFileReader.h Files/XDMFFileReader.cpp \
-                  Files/FITSFileReader.h Files/FITSFileReader.cpp 
-
-FILES_SOURCES = Files/File.cpp \
-                  Files/XDMFFileReader.cpp \
-                  Files/FITSFileReader.cpp \
-
-$(call LIBRARYNAME,libFiles): PACKAGES += $(MYFILES_DEPENDS)
-$(call LIBRARYNAME,libFiles): EXTRACINCLUDEFLAGS += $(MYFILES_INCLUDE)
-ifneq ($(FILES_USE_HDF5),0)
-  $(call LIBRARYNAME,libFiles): CFLAGS += -DFILES_USE_HDF5
-endif
-ifneq ($(FILES_USE_XDMF),0)
-  $(call LIBRARYNAME,libFiles): CFLAGS += -DFILES_USE_XDMF
-endif  
-ifneq ($(FILES_USE_CCFITS),0)
-  $(call LIBRARYNAME,libFiles): CFLAGS += -DFILES_USE_CCFITS
-endif  
-$(call LIBRARYNAME,libFiles): $(call DEPENDENCIES,MYFILES)
-$(call LIBRARYNAME,libFiles): $(FILES_SOURCES:%.cpp=$(OBJDIR)/%.o)
-.PHONY: libFiles
-libFiles: $(call LIBRARYNAME,libFiles)
-
-#
 # The basic sound library (Sound)
 #
 
@@ -1724,8 +1696,6 @@ endif
 	@install -m u=rw,go=r $(GLMOTIF_HEADERS) $(HEADERINSTALLDIR)/GLMotif
 	@install -d $(HEADERINSTALLDIR)/Images
 	@install -m u=rw,go=r $(IMAGES_HEADERS) $(HEADERINSTALLDIR)/Images
-	@install -d $(HEADERINSTALLDIR)/Files
-	@install -m u=rw,go=r $(FILES_HEADERS) $(HEADERINSTALLDIR)/Files
 ifneq ($(VRUI_USE_OPENAL),0)
 	@install -d $(HEADERINSTALLDIR)/AL
 	@install -m u=rw,go=r $(ALSUPPORT_HEADERS) $(HEADERINSTALLDIR)/AL
