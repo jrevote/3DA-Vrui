@@ -34,7 +34,7 @@ section "dante"
          uploadConstellationConfiguration ConstellationConfiguration
          buttonIndexBase 0
          valuatorIndexBase 0
-         stationNames (Head, Wand, Head2)
+         stationNames (Head, Wand)
 
          trackerPostTransformation0 rotate (0.0, 0.0, 1.0), -90.0 \
                                     * rotate (0.0, 1.0, 0.0), 180.0
@@ -64,23 +64,17 @@ section "dante"
          
          section Head
             id 1
-            predictionTime 70
-            perceptualEnhancement 2
+#            predictionTime 70
+#            perceptualEnhancement 2
          endsection
       
          section Wand
             id 2
-            predictionTime 70
+#            predictionTime 70
             numButtons 6
             joystick true
          endsection
          
-         section Head2
-            id 3
-            predictionTime 70
-            perceptualEnhancement 2
-         endsection
-
          section Calibrator
             transformation translate (0.0, -70.0, 0.0) \
                            * rotate (0.0, 0.0, 1.0), -90.0 \
