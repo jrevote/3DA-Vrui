@@ -36,7 +36,8 @@ include $(VRUIPACKAGEROOT)/BuildRoot/Packages
 # Root directory for the software installation
 # Note: This must a different directory than the one that contains this
 # makefile!
-INSTALLDIR = /home/jrevote/Documents/Projects/3D-Alive/Development/Builds/Vrui-1.0-068
+#INSTALLDIR = /home/jrevote/Documents/Projects/3D-Alive/Development/Builds/Vrui-1.0-068
+INSTALLDIR = /usr/local/packages/Vrui-1.0-068
 # Set this to 1 if Vrui executables and shared libraries shall contain
 # links to any shared libraries they link to. This will relieve a user
 # from having to set up a dynamic library search path.
@@ -85,21 +86,21 @@ endif
 # files / libraries are set properly in $(VRUIPACKAGEROOT)/BuildRoot/Packages.
 # For now, the following code tries to determine automatically 
 # whether HDF5, XDMF and FITS are supported. This might or might now work.
-ifneq ($(strip $(HDF5_BASEDIR)),)
-  FILES_USE_HDF5 = 1
-else
-  FILES_USE_HDF5 = 0
-endif
-ifneq ($(strip $(XDMF_BASEDIR)),)
-  FILES_USE_XDMF = 1
-else
-  FILES_USE_XDMF = 0
-endif
-ifneq ($(strip $(CCFITS_BASEDIR)),)
-  FILES_USE_CCFITS = 1
-else
-  FILES_USE_CCFITS = 0
-endif
+#ifneq ($(strip $(HDF5_BASEDIR)),)
+#  FILES_USE_HDF5 = 1
+#else
+#  FILES_USE_HDF5 = 0
+#endif
+#ifneq ($(strip $(XDMF_BASEDIR)),)
+#  FILES_USE_XDMF = 1
+#else
+#  FILES_USE_XDMF = 0
+#endif
+#ifneq ($(strip $(CCFITS_BASEDIR)),)
+#  FILES_USE_CCFITS = 1
+#else
+#  FILES_USE_CCFITS = 0
+#endif
 
 # Set this to 1 if Vrui shall contain support for saving screenshots in
 # PNG (Portable Network Graphics) format. If this is set to 0, Vrui will
@@ -456,21 +457,21 @@ ifneq ($(IMAGES_USE_TIFF),0)
 else
 	@echo "TIFF image file format disabled"
 endif
-ifneq ($(FILES_USE_HDF5),0)
-	@echo "HDF5 data file format enabled"
-else
-	@echo "HDF5 data file format disabled"
-endif
-ifneq ($(FILES_USE_XDMF),0)
-	@echo "XDMF data file format enabled"
-else
-	@echo "XDMF data file format disabled"
-endif
-ifneq ($(FILES_USE_CCFITS),0)
-	@echo "FITS data file format enabled"
-else
-	@echo "FITS data file format disabled"
-endif
+#ifneq ($(FILES_USE_HDF5),0)
+#	@echo "HDF5 data file format enabled"
+#else
+#	@echo "HDF5 data file format disabled"
+#endif
+#ifneq ($(FILES_USE_XDMF),0)
+#	@echo "XDMF data file format enabled"
+#else
+#	@echo "XDMF data file format disabled"
+#endif
+#ifneq ($(FILES_USE_CCFITS),0)
+#	@echo "FITS data file format enabled"
+#else
+#	@echo "FITS data file format disabled"
+#endif
 ifneq ($(VRUI_USE_PNG),0)
 	@echo "Screenshots will be saved in PNG format"
 else
@@ -1616,15 +1617,15 @@ endif
 ifneq ($(IMAGES_USE_TIFF),0)
   VRUIAPP_CFLAGS += -DIMAGES_HAVE_TIFF
 endif
-ifneq ($(FILES_USE_HDF5),0)
-  VRUIAPP_CFLAGS += -DFILES_HAVE_HDF5
-endif
-ifneq ($(FILES_USE_XDMF),0)
-  VRUIAPP_CFLAGS += -DFILES_HAVE_XDMF
-endif
-ifneq ($(FILES_USE_CCFITS),0)
-  VRUIAPP_CFLAGS += -DFILES_HAVE_CCFITS
-endif
+#ifneq ($(FILES_USE_HDF5),0)
+#  VRUIAPP_CFLAGS += -DFILES_HAVE_HDF5
+#endif
+#ifneq ($(FILES_USE_XDMF),0)
+#  VRUIAPP_CFLAGS += -DFILES_HAVE_XDMF
+#endif
+#ifneq ($(FILES_USE_CCFITS),0)
+#  VRUIAPP_CFLAGS += -DFILES_HAVE_CCFITS
+#endif
 VRUIAPP_LDIRS = -L$(LIBINSTALLDIR)
 VRUIAPP_LDIRS += $(sort $(foreach PACKAGENAME,$(SYSTEMPACKAGES),$($(PACKAGENAME)_LIBDIR)))
 VRUIAPP_LIBS = $(patsubst lib%,-l%.$(LDEXT),$(LIBRARY_NAMES))
