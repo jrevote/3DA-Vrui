@@ -431,6 +431,50 @@ void VRWindow::render(const GLWindow::WindowPos& viewportPos,int screenIndex,con
 		glMatrixMode(GL_MODELVIEW);
 		glPopMatrix();
 		}
+
+	if(showTrackersPos)
+		{
+		/* Set OpenGL matrices to pixel-based: */
+		glMatrixMode(GL_PROJECTION);
+		glPushMatrix();
+		glLoadIdentity();
+		glOrtho(0,viewportPos.size[0],0,viewportPos.size[1],0,1);
+		
+		glMatrixMode(GL_MODELVIEW);
+		glPushMatrix();
+		glLoadIdentity();
+		
+		#if RENDERFRAMETIMES
+		/* Render EKG of recent frame rates: */
+		glDisable(GL_LIGHTING);
+		glBegin(GL_LINES);
+		glColor3f(0.0f,1.0f,0.0f);
+		for(int i=0;i<numFrameTimes;++i)
+			if(i!=frameTimeIndex)
+				{
+				glVertex2i(i,0);
+				glVertex2i(i,int(floor(frameTimes[i]*1000.0+0.5)));
+				}
+		glColor3f(1.0f,0.0f,0.0f);
+		glVertex2i(frameTimeIndex,0);
+		glVertex2i(frameTimeIndex,int(floor(frameTimes[frameTimeIndex]*1000.0+0.5)));
+		glEnd();
+		glEnable(GL_LIGHTING);
+		#else
+		/* Print the current frame time: */
+		char buffer[20];
+		snprintf(buffer,sizeof(buffer),"%6.1f fps",1.0/vruiState->currentFrameTime);
+		glDisable(GL_LIGHTING);
+		showTrackersPosFont->drawString(GLFont::Vector(showTrackersPosFont->getCharacterWidth()*9.5f,0.0f,0.0f),buffer);
+		glEnable(GL_LIGHTING);
+		#endif
+		
+		/* Reset the OpenGL matrices: */
+		glMatrixMode(GL_PROJECTION);
+		glPopMatrix();
+		glMatrixMode(GL_MODELVIEW);
+		glPopMatrix();
+		}
 	}
 
 bool VRWindow::calcMousePos(int x,int y,Scalar mousePos[2]) const
@@ -852,6 +896,27 @@ VRWindow::VRWindow(const char* windowName,const Misc::ConfigurationFileSection& 
 		showFpsFont->setAntialiasing(false);
 		// showFpsFont->createCharTextures(*contextData);
 		}
+
+	if(showTrackersPos)
+		{
+		/* Load font: */
+		showTrackersPosFont=loadFont(configFileSection.retrieveString("./showTrackersPosFontName","HelveticaMediumUpright").c_str());
+		GLfloat textHeight=showTrackersPosFont->getTextPixelHeight()-1.0f;
+		if(textHeight>16.0f)
+			textHeight=16.0f;
+		showTrackersPosFont->setTextHeight(textHeight);
+		GLFont::Color bg=getBackgroundColor();
+		showTrackersPosFont->setBackgroundColor(bg);
+		GLFont::Color fg;
+		for(int i=0;i<3;++i)
+			fg[i]=1.0f-bg[i];
+		fg[3]=bg[3];
+		showTrackersPosFont->setForegroundColor(fg);
+		showTrackersPosFont->setHAlignment(GLFont::Right);
+		showTrackersPosFont->setVAlignment(GLFont::Bottom);
+		showTrackersPosFont->setAntialiasing(false);
+		// showTrackersPosFont->createCharTextures(*contextData);
+		}
 	
 	#ifdef VRWINDOW_USE_SWAPGROUPS
 	/* Join a swap group if requested: */
@@ -903,6 +968,7 @@ VRWindow::~VRWindow(void)
 		glDeleteTextures(1,&asViewMapTextureID);
 		}
 	delete showFpsFont;
+	delete showTrackersPosFont;
 	GLContextData::makeCurrent(0);
 	delete contextData;
 	GLExtensionManager::makeCurrent(0);

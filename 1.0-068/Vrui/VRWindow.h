@@ -100,6 +100,8 @@ class VRWindow:public GLWindow
 	
 	GLFont* showFpsFont; // Font to render the current update frequency
 	bool showFps; // Flag if the window is to display the current update frequency
+	GLFont* showTrackersPosFont; // Font to render the current trackers' tracked measurements
+	bool showTrackersPos; // Flag if the window is to display the current trackers' tracked measurements
 	bool protectScreens; // Flag if the window's screen(s) need to be protected from nearby input devices
 	bool trackToolKillZone; // Flag if the tool manager's tool kill zone should follow the window when moved/resized
 	Scalar toolKillZonePos[2]; // Position of tool kill zone in relative window coordinates (0.0-1.0 in both directions)
