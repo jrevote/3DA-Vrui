@@ -444,7 +444,12 @@ void VRWindow::render(const GLWindow::WindowPos& viewportPos,int screenIndex,con
 		glPushMatrix();
 		glLoadIdentity();
 
-      int numInputDevices=inputDeviceManager->getNumInputDevices();
+      int numInputDevices=vruiState->inputDeviceManager->getNumInputDevices();
+      for(int deviceIndex=0;deviceIndex<numInputDevices;++deviceIndex)
+         {
+
+         }
+
 
 		#if RENDERFRAMETIMES
 		/* Render EKG of recent frame rates: */
@@ -515,14 +520,13 @@ bool VRWindow::calcMousePos(int x,int y,Scalar mousePos[2]) const
 		}
 	}
 
-VRWindow::VRWindow(const char* windowName,const Misc::ConfigurationFileSection& configFileSection,VruiState* sVruiState,InputDeviceAdapterMouse* sMouseAdapter,InputDeviceManager* sInputDeviceManager)
+VRWindow::VRWindow(const char* windowName,const Misc::ConfigurationFileSection& configFileSection,VruiState* sVruiState,InputDeviceAdapterMouse* sMouseAdapter)
 	:GLWindow(getDisplayName(configFileSection).c_str(),
 	          windowName,
 						configFileSection.retrieveValue<GLWindow::WindowPos>("./windowPos",GLWindow::WindowPos(800,600)),
 	          getVisualProperties(configFileSection)),
 	 vruiState(sVruiState),
 	 mouseAdapter(sMouseAdapter),
-    inputDeviceManager(sInputDeviceManager),
 	 extensionManager(new GLExtensionManager),
 	 contextData(new GLContextData(101)),displayState(vruiState->registerContext(*contextData)),
 	 viewer(findViewer(configFileSection.retrieveString("./viewerName").c_str())),

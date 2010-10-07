@@ -65,7 +65,6 @@ class VRWindow:public GLWindow
 	private:
 	VruiState* vruiState; // Pointer to the Vrui state object this window belongs to
 	InputDeviceAdapterMouse* mouseAdapter; // Pointer to the mouse input device adapter (if one exists; 0 otherwise)
-   InputDeviceManager* inputDeviceManager; // Pointer to input device manager
 	GLExtensionManager* extensionManager; // An OpenGL extension manager for this window
 	GLContextData* contextData; // An OpenGL context data structure for this window
 	DisplayState* displayState; // The display state object associated with this window's OpenGL context; updated before each rendering pass
@@ -121,7 +120,7 @@ class VRWindow:public GLWindow
 	
 	/* Constructors and destructors: */
 	public:
-	VRWindow(const char* windowName,const Misc::ConfigurationFileSection& configFileSection,VruiState* sVruiState,InputDeviceAdapterMouse* sMouseAdapter,InputDeviceManager* sInputDeviceManager); // Initializes VR window based on settings from given configuration file section
+	VRWindow(const char* windowName,const Misc::ConfigurationFileSection& configFileSection,VruiState* sVruiState,InputDeviceAdapterMouse* sMouseAdapter); // Initializes VR window based on settings from given configuration file section
 	~VRWindow(void);
 	
 	/* Methods: */

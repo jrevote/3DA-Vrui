@@ -259,7 +259,6 @@ struct VruiRenderingThreadArg
 	int windowIndex; // Index of the window in the Vrui window array
 	Misc::ConfigurationFileSection windowConfigFileSection; // Configuration file section for the window
 	InputDeviceAdapterMouse* mouseAdapter; // Pointer to the mouse input device adapter
-	InputDeviceManager* inputDeviceManager; // Pointer to the input device manager
 	};
 
 void* vruiRenderingThreadFunction(VruiRenderingThreadArg threadArg)
@@ -278,7 +277,7 @@ void* vruiRenderingThreadFunction(VruiRenderingThreadArg threadArg)
 			snprintf(windowName,sizeof(windowName),"%s%d",vruiApplicationName,windowIndex);
 		else
 			snprintf(windowName,sizeof(windowName),"%s",vruiApplicationName);
-		vruiWindows[windowIndex]=new VRWindow(windowName,threadArg.windowConfigFileSection,vruiState,threadArg.mouseAdapter,threadArg.inputDeviceManager);
+		vruiWindows[windowIndex]=new VRWindow(windowName,threadArg.windowConfigFileSection,vruiState,threadArg.mouseAdapter);
 		}
 	catch(std::runtime_error error)
 		{
@@ -786,7 +785,6 @@ void startDisplay(PerDisplayInitFunctionType perDisplayInitFunction,void* userDa
 				ta.windowIndex=i;
 				ta.windowConfigFileSection=vruiConfigFile->getSection(windowNames[i].c_str());
 				ta.mouseAdapter=mouseAdapter;
-            ta.inputDeviceManager=vruiState->inputDeviceManager;
 				vruiRenderingThreads[i].start(vruiRenderingThreadFunction,ta);
 				}
 			
@@ -810,7 +808,7 @@ void startDisplay(PerDisplayInitFunctionType perDisplayInitFunction,void* userDa
 					snprintf(windowName,sizeof(windowName),"%s%d",vruiApplicationName,i);
 				else
 					snprintf(windowName,sizeof(windowName),"%s",vruiApplicationName);
-				vruiWindows[i]=new VRWindow(windowName,vruiConfigFile->getSection(windowNames[i].c_str()),vruiState,mouseAdapter,vruiState->inputDeviceManager);
+				vruiWindows[i]=new VRWindow(windowName,vruiConfigFile->getSection(windowNames[i].c_str()),vruiState,mouseAdapter);
 				
 				/* Initialize all GLObjects for this window's context data: */
 				vruiWindows[i]->makeCurrent();
