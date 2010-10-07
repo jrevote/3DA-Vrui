@@ -444,16 +444,23 @@ void VRWindow::render(const GLWindow::WindowPos& viewportPos,int screenIndex,con
 		glPushMatrix();
 		glLoadIdentity();
 
-      char buffer[100];
+      char posBuffer[100];
+      char orientBuffer[200];
       /* Loop over the input devices and retrieve their corresponding position: */
       int numInputDevices=vruiState->inputDeviceManager->getNumInputDevices();
       for(int deviceIndex=0;deviceIndex<numInputDevices;++deviceIndex)
          {
-         InputDevice* inputDevice = vruiState->inputDeviceManager->getInputDevice(deviceIndex);
-         Point pos = inputDevice->getPosition();
-         snprintf(buffer,sizeof(buffer),"%14.8f %14.8f %14.8f",pos[0],pos[1],pos[2]);
+         InputDevice* inputDevice=vruiState->inputDeviceManager->getInputDevice(deviceIndex);
+         Point pos=inputDevice->getPosition();
+         Rotation rot=inputDevice->getOrientation();
+         Vector axis=rot.getScaledAxis();
+         Scalar angle=Math::deg(rot.getAngle());
+         snprintf(posBuffer,sizeof(posBuffer),"  Position: (%14.8f %14.8f %14.8f)",pos[0],pos[1],pos[2]);
+         snprintf(orientBuffer,sizeof(orientBuffer),"Orientation: (%14.8f %14.8f %14.8f) (%14.8f %14.8f %14.8f) (%14.8f)",pos[0],pos[1],pos[2],axis[0],axis[1],axis[2],angle);
          glDisable(GL_LIGHTING);
-	   	showTrackersPosFont->drawString(GLFont::Vector(showTrackersPosFont->getCharacterWidth()*9.5f*(deviceIndex+1)+5.0f,0.0f,0.0f),buffer);
+	   	showTrackersPosFont->drawString(GLFont::Vector(showTrackersPosFont->getCharacterWidth()*9.5f*(deviceIndex+1)+5.0f,10.0f,0.0f),vruiState->inputDeviceManager->getInputDevice(deviceIndex)->getDeviceName());
+	   	showTrackersPosFont->drawString(GLFont::Vector(showTrackersPosFont->getCharacterWidth()*9.5f*(deviceIndex+1)+5.0f,5.0f,0.0f),posBuffer);
+	   	showTrackersPosFont->drawString(GLFont::Vector(showTrackersPosFont->getCharacterWidth()*9.5f*(deviceIndex+1)+5.0f,0.0f,0.0f),posBuffer);
 	      glEnable(GL_LIGHTING);
          }
 
