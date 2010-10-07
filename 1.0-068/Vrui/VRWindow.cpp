@@ -444,6 +444,8 @@ void VRWindow::render(const GLWindow::WindowPos& viewportPos,int screenIndex,con
 		glPushMatrix();
 		glLoadIdentity();
 
+      int numInputDevices=inputDeviceManager->getNumInputDevices();
+
 		#if RENDERFRAMETIMES
 		/* Render EKG of recent frame rates: */
 		glDisable(GL_LIGHTING);
@@ -513,13 +515,14 @@ bool VRWindow::calcMousePos(int x,int y,Scalar mousePos[2]) const
 		}
 	}
 
-VRWindow::VRWindow(const char* windowName,const Misc::ConfigurationFileSection& configFileSection,VruiState* sVruiState,InputDeviceAdapterMouse* sMouseAdapter)
+VRWindow::VRWindow(const char* windowName,const Misc::ConfigurationFileSection& configFileSection,VruiState* sVruiState,InputDeviceAdapterMouse* sMouseAdapter,InputDeviceManager* sInputDeviceManager)
 	:GLWindow(getDisplayName(configFileSection).c_str(),
 	          windowName,
 						configFileSection.retrieveValue<GLWindow::WindowPos>("./windowPos",GLWindow::WindowPos(800,600)),
 	          getVisualProperties(configFileSection)),
 	 vruiState(sVruiState),
 	 mouseAdapter(sMouseAdapter),
+    inputDeviceManager(sInputDeviceManager),
 	 extensionManager(new GLExtensionManager),
 	 contextData(new GLContextData(101)),displayState(vruiState->registerContext(*contextData)),
 	 viewer(findViewer(configFileSection.retrieveString("./viewerName").c_str())),
@@ -536,6 +539,8 @@ VRWindow::VRWindow(const char* windowName,const Misc::ConfigurationFileSection& 
 	 asInterzigShader(0),asQuadSizeUniformIndex(-1),
 	 showFpsFont(0),
 	 showFps(configFileSection.retrieveValue<bool>("./showFps",false)),
+	 showTrackersPosFont(0),
+	 showTrackersPos(configFileSection.retrieveValue<bool>("./showTrackersPos",false)),
 	 protectScreens(configFileSection.retrieveValue<bool>("./protectScreens",true)),
 	 trackToolKillZone(false),
 	 dirty(true),
