@@ -443,7 +443,7 @@ void VRWindow::render(const GLWindow::WindowPos& viewportPos,int screenIndex,con
 		glMatrixMode(GL_MODELVIEW);
 		glPushMatrix();
 		glLoadIdentity();
-		
+
 		#if RENDERFRAMETIMES
 		/* Render EKG of recent frame rates: */
 		glDisable(GL_LIGHTING);
