@@ -31,6 +31,7 @@ Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
 #include <GL/GLWindow.h>
 #include <Vrui/Geometry.h>
 #include <Vrui/InputDeviceManager.h>
+#include <Vrui/VRDeviceClient.h>
 
 /* Forward declarations: */
 namespace Misc {

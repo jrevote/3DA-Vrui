@@ -444,38 +444,19 @@ void VRWindow::render(const GLWindow::WindowPos& viewportPos,int screenIndex,con
 		glPushMatrix();
 		glLoadIdentity();
 
+      char buffer[100];
+      /* Loop over the input devices and retrieve their corresponding position: */
       int numInputDevices=vruiState->inputDeviceManager->getNumInputDevices();
       for(int deviceIndex=0;deviceIndex<numInputDevices;++deviceIndex)
          {
-
+         InputDevice* inputDevice = vruiState->inputDeviceManager->getInputDevice(deviceIndex);
+         Point pos = inputDevice->getPosition();
+         snprintf(buffer,sizeof(buffer),"%14.8f %14.8f %14.8f",pos[0],pos[1],pos[2]);
+         glDisable(GL_LIGHTING);
+	   	showTrackersPosFont->drawString(GLFont::Vector(showTrackersPosFont->getCharacterWidth()*9.5f,0.0f,0.0f),buffer);
+	      glEnable(GL_LIGHTING);
          }
 
-
-		#if RENDERFRAMETIMES
-		/* Render EKG of recent frame rates: */
-		glDisable(GL_LIGHTING);
-		glBegin(GL_LINES);
-		glColor3f(0.0f,1.0f,0.0f);
-		for(int i=0;i<numFrameTimes;++i)
-			if(i!=frameTimeIndex)
-				{
-				glVertex2i(i,0);
-				glVertex2i(i,int(floor(frameTimes[i]*1000.0+0.5)));
-				}
-		glColor3f(1.0f,0.0f,0.0f);
-		glVertex2i(frameTimeIndex,0);
-		glVertex2i(frameTimeIndex,int(floor(frameTimes[frameTimeIndex]*1000.0+0.5)));
-		glEnd();
-		glEnable(GL_LIGHTING);
-		#else
-		/* Print the current frame time: */
-		char buffer[20];
-		snprintf(buffer,sizeof(buffer),"%6.1f fps",1.0/vruiState->currentFrameTime);
-		glDisable(GL_LIGHTING);
-		showTrackersPosFont->drawString(GLFont::Vector(showTrackersPosFont->getCharacterWidth()*9.5f,0.0f,0.0f),buffer);
-		glEnable(GL_LIGHTING);
-		#endif
-		
 		/* Reset the OpenGL matrices: */
 		glMatrixMode(GL_PROJECTION);
 		glPopMatrix();
