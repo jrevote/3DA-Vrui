@@ -453,7 +453,7 @@ void VRWindow::render(const GLWindow::WindowPos& viewportPos,int screenIndex,con
          Point pos = inputDevice->getPosition();
          snprintf(buffer,sizeof(buffer),"%14.8f %14.8f %14.8f",pos[0],pos[1],pos[2]);
          glDisable(GL_LIGHTING);
-	   	showTrackersPosFont->drawString(GLFont::Vector(showTrackersPosFont->getCharacterWidth()*9.5f,0.0f,0.0f),buffer);
+	   	showTrackersPosFont->drawString(GLFont::Vector(showTrackersPosFont->getCharacterWidth()*9.5f*(deviceIndex+1)+5.0f,0.0f,0.0f),buffer);
 	      glEnable(GL_LIGHTING);
          }
 
