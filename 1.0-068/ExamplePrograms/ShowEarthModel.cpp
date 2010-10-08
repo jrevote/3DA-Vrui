@@ -849,7 +849,7 @@ void ShowEarthModel::initContext(GLContextData& contextData) const
 	std::string topographyFileName=SHOWEARTHMODEL_IMAGEDIR;
 	#ifdef IMAGES_HAVE_PNG
 	//topographyFileName.append("/EarthTopography.png");
-	topographyFileName.append("/EarthTopography-2.png");
+	topographyFileName.append("/EarthTopography.png");
 	#else
 	topographyFileName.append("/EarthTopography.ppm");
 	#endif
