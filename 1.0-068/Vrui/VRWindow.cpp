@@ -434,6 +434,10 @@ void VRWindow::render(const GLWindow::WindowPos& viewportPos,int screenIndex,con
 
 	if(showTrackersPos)
 		{
+      /* Temporary file for dumping the tracker positions. */
+      FILE* saveFile=0;
+      saveFile=fopen("/tmp/Trackers-Info.txt","a");
+
 		/* Set OpenGL matrices to pixel-based: */
 		glMatrixMode(GL_PROJECTION);
 		glPushMatrix();
@@ -456,7 +460,9 @@ void VRWindow::render(const GLWindow::WindowPos& viewportPos,int screenIndex,con
          Vector axis=rot.getScaledAxis();
          Scalar angle=Math::deg(rot.getAngle());
          snprintf(posBuffer,sizeof(posBuffer),"Position:%14.8f %14.8f %14.8f\n",pos[0],pos[1],pos[2]);
+         fprintf(saveFile,"Position:%14.8f %14.8f %14.8f\n",pos[0],pos[1],pos[2]);
          snprintf(orientBuffer,sizeof(orientBuffer),"Orientation:%14.8f %14.8f %14.8f %14.8f\n",axis[0],axis[1],axis[2],angle);
+         fprintf(saveFile,"Orientation:%14.8f %14.8f %14.8f %14.8f\n",axis[0],axis[1],axis[2],angle);
          glDisable(GL_LIGHTING);
 	   	showTrackersPosFont->drawString(GLFont::Vector(showTrackersPosFont->getCharacterWidth()*6.5f,45.0f+(deviceIndex*75.0f),0.0f),vruiState->inputDeviceManager->getInputDevice(deviceIndex)->getDeviceName());
 	   	showTrackersPosFont->drawString(GLFont::Vector(showTrackersPosFont->getCharacterWidth()*49.0f,25.0f+(deviceIndex*75.0f),0.0f),posBuffer);
@@ -469,6 +475,9 @@ void VRWindow::render(const GLWindow::WindowPos& viewportPos,int screenIndex,con
 		glPopMatrix();
 		glMatrixMode(GL_MODELVIEW);
 		glPopMatrix();
+       
+      /* Close our file. */
+      fclose(saveFile);
 		}
 	}
 
