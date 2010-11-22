@@ -417,12 +417,15 @@ void TCPSocket::blockingRead(void* buffer,size_t count)
 		{
 		ssize_t numBytesRead=::read(socketFd,byteBuffer,count);
 		if(numBytesRead!=ssize_t(count))
-			{
-			if(numBytesRead>0||errno==EAGAIN||errno==EINTR)
+			if(numBytesRead>0)
 				{
 				/* Advance result pointer and retry: */
 				count-=numBytesRead;
 				byteBuffer+=numBytesRead;
+				}
+			else if(errno==EAGAIN||errno==EINTR)
+				{
+				/* Do nothing and retry */
 				}
 			else if(numBytesRead==0)
 				{
