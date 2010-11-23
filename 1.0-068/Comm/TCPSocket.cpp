@@ -417,6 +417,7 @@ void TCPSocket::blockingRead(void* buffer,size_t count)
 		{
 		ssize_t numBytesRead=::read(socketFd,byteBuffer,count);
 		if(numBytesRead!=ssize_t(count))
+			{
 			if(numBytesRead>0)
 				{
 				/* Advance result pointer and retry: */
