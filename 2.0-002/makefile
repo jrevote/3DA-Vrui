@@ -40,7 +40,8 @@ include $(VRUIPACKAGEROOT)/BuildRoot/Packages
 # installation directory.
 ########################################################################
 
-INSTALLDIR = $(HOME)/Vrui-2.0-002
+#INSTALLDIR = $(HOME)/Vrui-2.0-002
+INSTALLDIR = /usr/local/packages/Vrui-2.0-002
 
 ########################################################################
 # Some settings that might need adjustment. In general, do not bother
