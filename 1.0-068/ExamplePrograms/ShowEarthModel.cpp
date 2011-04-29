@@ -784,7 +784,7 @@ ShowEarthModel::ShowEarthModel(int& argc,char**& argv,char**& appDefaults)
 	/* Initialize the earthquake animation: */
 	currentTime=earthquakeTimeRange.first;
 	playSpeed=365.0*24.0*60.0*60.0; // One second per year
-	play=false;
+	play=true;
 	for(std::vector<EarthquakeSet*>::iterator esIt=earthquakeSets.begin();esIt!=earthquakeSets.end();++esIt)
 		{
 		(*esIt)->setHighlightTime(playSpeed);

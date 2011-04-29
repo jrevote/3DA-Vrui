@@ -86,11 +86,11 @@ endif
 # files / libraries are set properly in $(VRUIPACKAGEROOT)/BuildRoot/Packages.
 # For now, the following code tries to determine automatically 
 # whether HDF5, XDMF and FITS are supported. This might or might now work.
-#ifneq ($(strip $(HDF5_BASEDIR)),)
-#  FILES_USE_HDF5 = 1
-#else
-#  FILES_USE_HDF5 = 0
-#endif
+ifneq ($(strip $(HDF5_BASEDIR)),)
+  FILES_USE_HDF5 = 1
+else
+  FILES_USE_HDF5 = 0
+endif
 #ifneq ($(strip $(XDMF_BASEDIR)),)
 #  FILES_USE_XDMF = 1
 #else
@@ -457,11 +457,11 @@ ifneq ($(IMAGES_USE_TIFF),0)
 else
 	@echo "TIFF image file format disabled"
 endif
-#ifneq ($(FILES_USE_HDF5),0)
-#	@echo "HDF5 data file format enabled"
-#else
-#	@echo "HDF5 data file format disabled"
-#endif
+ifneq ($(FILES_USE_HDF5),0)
+	@echo "HDF5 data file format enabled"
+else
+	@echo "HDF5 data file format disabled"
+endif
 #ifneq ($(FILES_USE_XDMF),0)
 #	@echo "XDMF data file format enabled"
 #else
@@ -1617,9 +1617,9 @@ endif
 ifneq ($(IMAGES_USE_TIFF),0)
   VRUIAPP_CFLAGS += -DIMAGES_HAVE_TIFF
 endif
-#ifneq ($(FILES_USE_HDF5),0)
-#  VRUIAPP_CFLAGS += -DFILES_HAVE_HDF5
-#endif
+ifneq ($(FILES_USE_HDF5),0)
+  VRUIAPP_CFLAGS += -DFILES_HAVE_HDF5
+endif
 #ifneq ($(FILES_USE_XDMF),0)
 #  VRUIAPP_CFLAGS += -DFILES_HAVE_XDMF
 #endif
