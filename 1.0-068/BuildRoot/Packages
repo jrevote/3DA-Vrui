@@ -174,7 +174,7 @@ GL_DEPENDS =
 GL_INCLUDE = -I$(GL_BASEDIR)/$(INCLUDEEXT)
 GL_LIBDIR = -L$(GL_BASEDIR)/$(LIBEXT)
 GL_LIBS = -lGL
-ifeq ($(SYSTEM_DARWIN_VERSION),10.5)
+ifeq ($(SYSTEM_DARWIN_VERSION),10.6)
   GL_LIBS   += -Wl,-dylib_file,/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libGL.dylib:/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libGL.dylib
 endif
 
