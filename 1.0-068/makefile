@@ -87,19 +87,19 @@ endif
 # For now, the following code tries to determine automatically 
 # whether HDF5, XDMF and FITS are supported. This might or might now work.
 ifneq ($(strip $(HDF5_BASEDIR)),)
-  FILES_USE_HDF5 = 1
+  MISC_USE_HDF5 = 1
 else
-  FILES_USE_HDF5 = 0
+  MISC_USE_HDF5 = 0
 endif
 #ifneq ($(strip $(XDMF_BASEDIR)),)
-#  FILES_USE_XDMF = 1
+#  MISC_USE_XDMF = 1
 #else
-#  FILES_USE_XDMF = 0
+#  MISC_USE_XDMF = 0
 #endif
 #ifneq ($(strip $(CCFITS_BASEDIR)),)
-#  FILES_USE_CCFITS = 1
+#  MISC_USE_CCFITS = 1
 #else
-#  FILES_USE_CCFITS = 0
+#  MISC_USE_CCFITS = 0
 #endif
 
 # Set this to 1 if Vrui shall contain support for saving screenshots in
@@ -457,17 +457,17 @@ ifneq ($(IMAGES_USE_TIFF),0)
 else
 	@echo "TIFF image file format disabled"
 endif
-ifneq ($(FILES_USE_HDF5),0)
+ifneq ($(MISC_USE_HDF5),0)
 	@echo "HDF5 data file format enabled"
 else
 	@echo "HDF5 data file format disabled"
 endif
-#ifneq ($(FILES_USE_XDMF),0)
+#ifneq ($(MISC_USE_XDMF),0)
 #	@echo "XDMF data file format enabled"
 #else
 #	@echo "XDMF data file format disabled"
 #endif
-#ifneq ($(FILES_USE_CCFITS),0)
+#ifneq ($(MISC_USE_CCFITS),0)
 #	@echo "FITS data file format enabled"
 #else
 #	@echo "FITS data file format disabled"
@@ -1617,14 +1617,14 @@ endif
 ifneq ($(IMAGES_USE_TIFF),0)
   VRUIAPP_CFLAGS += -DIMAGES_HAVE_TIFF
 endif
-ifneq ($(FILES_USE_HDF5),0)
-  VRUIAPP_CFLAGS += -DFILES_HAVE_HDF5
+ifneq ($(MISC_USE_HDF5),0)
+  VRUIAPP_CFLAGS += -DMISC_HAVE_HDF5
 endif
-#ifneq ($(FILES_USE_XDMF),0)
-#  VRUIAPP_CFLAGS += -DFILES_HAVE_XDMF
+#ifneq ($(MISC_USE_XDMF),0)
+#  VRUIAPP_CFLAGS += -DMISC_HAVE_XDMF
 #endif
-#ifneq ($(FILES_USE_CCFITS),0)
-#  VRUIAPP_CFLAGS += -DFILES_HAVE_CCFITS
+#ifneq ($(MISC_USE_CCFITS),0)
+#  VRUIAPP_CFLAGS += -DMISC_HAVE_CCFITS
 #endif
 VRUIAPP_LDIRS = -L$(LIBINSTALLDIR)
 VRUIAPP_LDIRS += $(sort $(foreach PACKAGENAME,$(SYSTEMPACKAGES),$($(PACKAGENAME)_LIBDIR)))
