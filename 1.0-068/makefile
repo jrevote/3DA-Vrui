@@ -36,7 +36,6 @@ include $(VRUIPACKAGEROOT)/BuildRoot/Packages
 # Root directory for the software installation
 # Note: This must a different directory than the one that contains this
 # makefile!
-#INSTALLDIR = /home/jrevote/Documents/Projects/3D-Alive/Development/Builds/Vrui-1.0-068
 INSTALLDIR = /usr/local/packages/Vrui-1.0-068
 # Set this to 1 if Vrui executables and shared libraries shall contain
 # links to any shared libraries they link to. This will relieve a user
@@ -260,7 +259,6 @@ LIBRARY_NAMES = libMisc \
                 libGLGeometry \
                 libGLMotif \
                 libImages \
-                libFiles \
                 libSound \
                 libALSupport \
                 libSceneGraph \
