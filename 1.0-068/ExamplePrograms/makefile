@@ -22,7 +22,6 @@
 # same setting in Vrui's makefile. By default the directories match; if
 # the installation directory was adjusted during Vrui's installation, it
 # must be adjusted here as well.
-#VRUIDIR = /home/jrevote/Documents/Projects/3D-Alive/Development/Builds/Vrui-1.0-068
 VRUIDIR = /usr/local/packages/Vrui-1.0-068
 
 # Base installation directory for the example programs. If this is set
@@ -32,7 +31,6 @@ VRUIDIR = /usr/local/packages/Vrui-1.0-068
 # directory, respectively.
 # Important note: Do not use ~ as an abbreviation for the user's home
 # directory here; use $(HOME) instead.
-#INSTALLDIR = /home/jrevote/Documents/Projects/3D-Alive/Development/Builds/Vrui-1.0-068/demos
 INSTALLDIR = /usr/local/packages/Vrui-1.0-068/demos
 
 # Set up destination directories for compilation products:
