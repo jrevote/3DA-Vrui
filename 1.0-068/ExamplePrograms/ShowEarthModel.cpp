@@ -961,8 +961,9 @@ void ShowEarthModel::frame(void)
 		if(currentTime>earthquakeTimeRange.second)
 			{
 			currentTime=earthquakeTimeRange.first;
-			play=false;
-			playToggle->setToggle(false);
+         /* Always set play to true for looping: */
+			//play=false;
+			//playToggle->setToggle(false);
 			}
 		updateCurrentTime();
 		currentTimeSlider->setValue(currentTime);
