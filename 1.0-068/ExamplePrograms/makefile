@@ -78,7 +78,6 @@ ALL = $(BINDIR)/VruiDemo \
       $(BINDIR)/VruiCustomToolDemo \
       $(BINDIR)/VruiCalibrator \
       $(BINDIR)/ShowEarthModel \
-      $(BINDIR)/ShowCloudModel \
       $(BINDIR)/Jello \
       $(BINDIR)/ClusterJello \
       $(BINDIR)/SharedJelloServer \
@@ -115,15 +114,6 @@ $(BINDIR)/ShowEarthModel: $(OBJDIR)/EarthFunctions.o \
                           $(OBJDIR)/EarthquakeSet.o \
                           $(OBJDIR)/EarthquakeTool.o \
                           $(OBJDIR)/ShowEarthModel.o
-
-$(OBJDIR)/ShowCloudModel.o: CFLAGS += -DSHOWEARTHMODEL_IMAGEDIR='"$(INSTALLDIR)/$(RESOURCEDIR)"'
-
-$(BINDIR)/ShowCloudModel: $(OBJDIR)/EarthFunctions.o \
-                          $(OBJDIR)/PointSet.o \
-                          $(OBJDIR)/SeismicPath.o \
-                          $(OBJDIR)/EarthquakeSet.o \
-                          $(OBJDIR)/EarthquakeTool.o \
-                          $(OBJDIR)/ShowCloudModel.o
 
 $(BINDIR)/Jello: $(OBJDIR)/JelloAtom.o \
                  $(OBJDIR)/JelloCrystal.o \
