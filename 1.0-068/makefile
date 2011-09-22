@@ -36,7 +36,7 @@ include $(VRUIPACKAGEROOT)/BuildRoot/Packages
 # Root directory for the software installation
 # Note: This must a different directory than the one that contains this
 # makefile!
-INSTALLDIR = /usr/local/packages/Vrui-1.0-068
+INSTALLDIR = /usr/local/packages/Vrui/1.0-068
 # Set this to 1 if Vrui executables and shared libraries shall contain
 # links to any shared libraries they link to. This will relieve a user
 # from having to set up a dynamic library search path.
