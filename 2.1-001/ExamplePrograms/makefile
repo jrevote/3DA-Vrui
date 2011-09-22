@@ -22,7 +22,8 @@
 # same setting in Vrui's makefile. By default the directories match; if
 # the installation directory was adjusted during Vrui's installation, it
 # must be adjusted here as well.
-VRUIDIR = $(HOME)/Vrui-2.1
+#VRUIDIR = $(HOME)/Vrui-2.1
+VRUIDIR = /usr/local/packages/Vrui/2.1-001
 
 # Base installation directory for the example programs. If this is set
 # to the default of $(PWD), the example programs do not have to be
@@ -31,7 +32,8 @@ VRUIDIR = $(HOME)/Vrui-2.1
 # directory, respectively.
 # Important note: Do not use ~ as an abbreviation for the user's home
 # directory here; use $(HOME) instead.
-INSTALLDIR = $(shell pwd)
+#INSTALLDIR = $(shell pwd)
+INSTALLDIR = /usr/local/packages/Vrui/2.1-001/demos
 
 # Set up destination directories for compilation products:
 OBJDIRBASE = o

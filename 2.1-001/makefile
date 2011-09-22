@@ -40,7 +40,8 @@ include $(VRUIPACKAGEROOT)/BuildRoot/Packages
 # installation directory.
 ########################################################################
 
-INSTALLDIR = $(HOME)/Vrui-2.1
+#INSTALLDIR = $(HOME)/Vrui-2.1
+INSTALLDIR = /usr/local/packages/Vrui/2.1-001
 
 ########################################################################
 # Some settings that might need adjustment. In general, do not bother
@@ -72,6 +73,19 @@ ifneq ($(strip $(TIFF_BASEDIR)),)
   SYSTEM_HAVE_LIBTIFF = 1
 else
   SYSTEM_HAVE_LIBTIFF = 0
+endif
+
+# Set the following flags to 1 if the formats handling library shall
+# contain support for reading/writing HDF5 files, respectively.
+# This requires that libhdf5 are installed 
+# on the host computer and that the paths to their respective header
+# files / libraries are set properly in $(VRUIPACKAGEROOT)/BuildRoot/Packages.
+# For now, the following code tries to determine automatically 
+# whether HDF5 are supported. This might or might now work.
+ifneq ($(strip $(HDF5_BASEDIR)),)
+  SYSTEM_USE_HDF5 = 1
+else
+  SYSTEM_USE_HDF5 = 0
 endif
 
 # Set the following two flags to 1 if the low-level sound library shall
@@ -414,6 +428,7 @@ endif
 .PHONY: Configure-End
 Configure-End: Configure-Realtime \
                Configure-GLSupport \
+               Configure-Files \
                Configure-Images \
                Configure-Sound \
                Configure-ALSupport \
@@ -815,6 +830,18 @@ $(call LIBRARYNAME,libGLMotif): $(call DEPENDENCIES,MYGLMOTIF)
 $(call LIBRARYNAME,libGLMotif): $(GLMOTIF_SOURCES:%.cpp=$(OBJDIR)/%.o)
 .PHONY: libGLMotif
 libGLMotif: $(call LIBRARYNAME,libGLMotif)
+
+#
+# The File Handling Library (Files)
+#
+
+.PHONY: Configure-Files
+Configure-Files: Configure-Begin
+ifneq ($(SYSTEM_HAVE_HDF5),0)
+	@echo "HDF5 input file format enabled"
+else
+	@echo "HDF5 input file format disabled"
+endif
 
 #
 # The Image Handling Library (Images)
