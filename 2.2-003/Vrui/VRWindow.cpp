@@ -1384,7 +1384,7 @@ bool VRWindow::processEvent(const XEvent& event)
 				/* Handle Vrui application keys: */
 				switch(keySym)
 					{
-					case XK_Print:
+					case XK_Return:
 						{  
 						saveScreenshot=true;
 						char numberedFileName[256];
@@ -1397,7 +1397,6 @@ bool VRWindow::processEvent(const XEvent& event)
 						#endif
 						break;
 						}
-					
 					case XK_Escape:
 						{
 						/* Call the window close callbacks: */
