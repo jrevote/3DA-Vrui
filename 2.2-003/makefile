@@ -30,7 +30,7 @@
 ########################################################################
 
 #INSTALLDIR := $(HOME)/Vrui-2.2
-INSTALLDIR := /usr/local/packages/vrui/2.2-003
+INSTALLDIR := /usr/local/packages/Vrui/2.2-003
 
 ########################################################################
 # Please do not change the following lines
