@@ -29,7 +29,8 @@
 # installation directory.
 ########################################################################
 
-INSTALLDIR := $(HOME)/Vrui-2.3
+#INSTALLDIR := $(HOME)/Vrui-2.3
+INSTALLDIR := /usr/local/packages/Vrui/2.3-001
 
 ########################################################################
 # Please do not change the following lines
@@ -64,6 +65,7 @@ include $(VRUI_MAKEDIR)/Packages.System
 # SYSTEM_HAVE_LIBPNG = 0
 # SYSTEM_HAVE_LIBJPEG = 0
 # SYSTEM_HAVE_LIBTIFF = 0
+# SYSTEM_HAVE_LIBHDF5 = 0
 # SYSTEM_HAVE_ALSA = 0
 # SYSTEM_HAVE_SPEEX = 0
 # SYSTEM_HAVE_OPENAL = 0
@@ -139,7 +141,7 @@ VRDEVICES_USE_BLUETOOTH = $(SYSTEM_HAVE_BLUETOOTH)
 # Specify version of created dynamic shared libraries
 VRUI_VERSION = 2003001
 MAJORLIBVERSION = 2
-MINORLIBVERSION = 3
+MINORLIBVERSION = 3s
 VRUI_NAME := Vrui-$(MAJORLIBVERSION).$(MINORLIBVERSION)
 
 # Set additional debug options
@@ -1136,6 +1138,11 @@ ifneq ($(SYSTEM_HAVE_LIBPNG),0)
 else
 	@echo "Vrui will save screenshots in PPM format"
 endif
+ifneq ($(SYSTEM_USE_HDF5),0)
+	@echo "HDF5 support enabled"
+else
+	@echo "HDF5 support disabled"
+endif
 ifneq ($(SYSTEM_HAVE_OPENAL),0)
 	@echo "Support for spatial audio enabled"
 else
@@ -1504,6 +1511,7 @@ $(MAKECONFIGFILE): config
 	@echo 'SYSTEM_HAVE_LIBPNG = $(SYSTEM_HAVE_LIBPNG)' >> $(MAKECONFIGFILE)
 	@echo 'SYSTEM_HAVE_LIBJPEG = $(SYSTEM_HAVE_LIBJPEG)' >> $(MAKECONFIGFILE)
 	@echo 'SYSTEM_HAVE_LIBTIFF = $(SYSTEM_HAVE_LIBTIFF)' >> $(MAKECONFIGFILE)
+	@echo 'SYSTEM_HAVE_LIBHDF5 = $(SYSTEM_HAVE_LIBHDF5)' >> $(MAKECONFIGFILE)
 	@echo 'SYSTEM_HAVE_ALSA = $(SYSTEM_HAVE_ALSA)' >> $(MAKECONFIGFILE)
 	@echo 'SYSTEM_HAVE_SPEEX = $(SYSTEM_HAVE_SPEEX)' >> $(MAKECONFIGFILE)
 	@echo 'SYSTEM_HAVE_OPENAL = $(SYSTEM_HAVE_OPENAL)' >> $(MAKECONFIGFILE)

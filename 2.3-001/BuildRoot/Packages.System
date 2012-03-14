@@ -93,6 +93,14 @@ TIFF_INCLUDE = -I$(TIFF_BASEDIR)/$(INCLUDEEXT)
 TIFF_LIBDIR  = -L$(TIFF_BASEDIR)/$(LIBEXT)
 TIFF_LIBS    = -ltiff
 
+# The HDF5 library package
+#HDF5_BASEDIR = $(shell $(VRUI_MAKEDIR)/FindLibrary.sh hdf5.h libhdf5.$(DSOFILEEXT) $(INCLUDEEXT) $(LIBEXT) /usr /usr/local)
+HDF5_BASEDIR = /usr/local/packages/hdf5/1.8.8
+HDF5_DEPENDS =
+HDF5_INCLUDE = -I$(HDF5_BASEDIR)/$(INCLUDEEXT)
+HDF5_LIBDIR = -L$(HDF5_BASEDIR)/$(LIBEXT)
+HDF5_LIBS = -lhdf5
+
 # The ALSA low-level sound library
 ALSA_BASEDIR = $(shell $(VRUI_MAKEDIR)/FindLibrary.sh alsa/asoundlib.h libasound.$(DSOFILEEXT) $(INCLUDEEXT) $(LIBEXT) /usr /usr/local)
 ALSA_DEPENDS = 
