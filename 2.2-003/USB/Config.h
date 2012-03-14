@@ -22,6 +22,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 #ifndef USB_CONFIG_INCLUDED
 #define USB_CONFIG_INCLUDED
 
-#define USB_CONFIG_HAVE_LIBUSB1 1
+#define USB_CONFIG_HAVE_LIBUSB1 0
 
 #endif

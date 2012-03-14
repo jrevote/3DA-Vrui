@@ -23,6 +23,6 @@ Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
 #ifndef REALTIME_CONFIG_INCLUDED
 #define REALTIME_CONFIG_INCLUDED
 
-#define REALTIME_CONFIG_HAVE_POSIX_TIMERS 1
+#define REALTIME_CONFIG_HAVE_POSIX_TIMERS 0
 
 #endif
