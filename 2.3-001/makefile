@@ -30,7 +30,7 @@
 ########################################################################
 
 #INSTALLDIR := $(HOME)/Vrui-2.3
-INSTALLDIR := /usr/local/packages/Vrui/2.3-001
+INSTALLDIR := /Users/jrevote/Documents/Builds/Vrui/2.3-001
 
 ########################################################################
 # Please do not change the following lines
