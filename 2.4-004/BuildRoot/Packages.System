@@ -72,6 +72,14 @@ ZLIB_INCLUDE =
 ZLIB_LIBDIR  = 
 ZLIB_LIBS    = -lz
 
+# The HDF5 library package
+#HDF5_BASEDIR = $(shell $(VRUI_MAKEDIR)/FindLibrary.sh hdf5.h libhdf5.$(DSOFILEEXT) $(INCLUDEEXT) $(LIBEXT) /usr /usr/local)
+HDF5_BASEDIR = /Users/jrevote/Documents/Builds/hdf5/1.8.8
+HDF5_DEPENDS = 
+HDF5_INCLUDE = -I$(HDF5_BASEDIR)/$(INCLUDEEXT)
+HDF5_LIBDIR  = -L$(HDF5_BASEDIR)/$(LIBEXT)
+HDF5_LIBS    = -lhdf5
+
 # The PNG image package
 #PNG_BASEDIR = $(shell $(VRUI_MAKEDIR)/FindLibrary.sh png.h libpng.$(DSOFILEEXT) $(INCLUDEEXT) $(LIBEXT) /usr /usr/local)
 PNG_BASEDIR = /Users/jrevote/Documents/Builds/libpng/1.5.13
@@ -223,6 +231,12 @@ ifneq ($(strip $(LIBUSB1_BASEDIR)),)
   SYSTEM_HAVE_LIBUSB1 = 1
 else
   SYSTEM_HAVE_LIBUSB1 = 0
+endif
+
+ifneq ($(strip $(HDF5_BASEDIR)),)
+  SYSTEM_HAVE_LIBHDF5 = 1
+else
+  SYSTEM_HAVE_LIBHDF5 = 0
 endif
 
 ifneq ($(strip $(PNG_BASEDIR)),)

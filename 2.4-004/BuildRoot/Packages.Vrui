@@ -24,6 +24,9 @@
 
 MYMISC_BASEDIR = $(VRUI_PACKAGEROOT)
 MYMISC_DEPENDS = 
+ifneq ($(SYSTEM_USE_HDF5),0)                                                   
+  MYMISC_DEPENDS += HDF5                                                       
+endif 
 MYMISC_INCLUDE = -I$(VRUI_INCLUDEDIR)
 MYMISC_LIBDIR  = -L$(VRUI_LIBDIR)
 MYMISC_LIBS    = -lMisc.$(LDEXT)
