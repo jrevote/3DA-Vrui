@@ -29,7 +29,8 @@
 # installation directory.
 ########################################################################
 
-INSTALLDIR := $(HOME)/Vrui-2.6
+#INSTALLDIR := $(HOME)/Vrui-2.6
+INSTALLDIR := /Users/jrevote/Documents/Builds/Vrui/2.6-001
 
 ########################################################################
 # Please do not change the following lines
